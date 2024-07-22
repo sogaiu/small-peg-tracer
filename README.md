@@ -1,6 +1,6 @@
 # simple-peg-tracer (spt)
 
-Generate and investigate traces for Janet PEG [1] execution.
+Generate and investigate traces for Janet PEG execution [1].
 
 The generated traces are static HTML files that should be viewable and
 navigable in typical web browsers.
@@ -36,7 +36,7 @@ Generated trace files in /tmp/spt-trace-900.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-900/first.html
 * last event: file:///tmp/spt-trace-900/last.html
-* all events: file:///tmp/spt-trace-900/log.html
+* event log: file:///tmp/spt-trace-900/log.html
 ```
 
 Notes:
