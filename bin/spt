@@ -1,0 +1,5 @@
+(import spt/main)
+
+(defn main
+  [& argv]
+  (main/main ;argv))
