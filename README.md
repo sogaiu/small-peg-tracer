@@ -75,7 +75,7 @@ text (roughly, arguments that could be passed to `peg/match` wrapped
 in a tuple) from which to construct a call to `meg/match`:
 
 ```
-spt $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
+$ spt $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
 Selected file: $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
 Generated trace files in /tmp/spt-trace-e75.
 Recommended starting points:
