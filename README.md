@@ -118,6 +118,9 @@ Recommended starting points:
 * event log: file:///tmp/spt-trace-87a/log.html
 ```
 
+Note that there are numerous self-contained calls to `peg/match` in
+most of the files in the `spt/margaret/examples` directory.
+
 #### Emacs
 
 In Emacs, this might be done via `M-x shell-command-on-region`.
