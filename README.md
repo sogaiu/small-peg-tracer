@@ -139,7 +139,7 @@ Subsequently, typing `:w !spt -t` to make that:
 
 ...and then pressing the enter key should hopefully do the trick.
 
-![Trace Sample](spt-s-via-neovim.png?raw=true "spt via Neovim")
+![spt via Neovim](spt-s-via-neovim.png?raw=true "spt via Neovim")
 
 ## Notes
 
