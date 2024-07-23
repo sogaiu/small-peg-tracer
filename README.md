@@ -107,8 +107,7 @@ installation).
 
 `spt -s` can be usefully invoked from an editor, being passed a
 suitable selection of text via standard input.  The selection should
-be a self-contained call to `peg/match`.  (In Emacs this might be done
-via `M-x shell-command-on-region`.)
+be a self-contained call to `peg/match`.
 
 ```
 $ echo '(peg/match ~(capture "a") "a")' | spt -s
@@ -118,6 +117,27 @@ Recommended starting points:
 * last event: file:///tmp/spt-trace-87a/last.html
 * event log: file:///tmp/spt-trace-87a/log.html
 ```
+
+#### Emacs
+
+In Emacs, this might be done via `M-x shell-command-on-region`.
+
+#### Vim / Neovim
+
+In Vim / Neovim, using visual mode to make a selection and then typing
+`:` to invoke command line mode should show:
+
+```
+:'<,'>
+```
+
+Subsequently, typing `:w !spt -t` to make that:
+
+```
+:'<,'>:w !spt -s
+```
+
+...and then pressing the enter key should hopefully do the trick.
 
 ## Notes
 
@@ -171,6 +191,7 @@ $ spt -h
 ## Credits
 
 * pyrmont - discussion and samples
+* toraritte - [this stackoverflow answer](https://stackoverflow.com/a/5373376)
 
 ## Footnotes
 
