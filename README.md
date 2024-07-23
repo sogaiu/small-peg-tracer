@@ -84,7 +84,22 @@ Recommended starting points:
 * event log: file:///tmp/spt-trace-e75/log.html
 ```
 
-To see some example files, see the `spt/trace/samples` directory that
+Here is what a typical file looks like:
+
+```janet
+[~{:main (* :tagged -1)
+  :tagged (unref (replace (* :open-tag :value :close-tag) ,struct))
+  :open-tag (* (constant :tag) "<" (capture :w+ :tag-name) ">")
+  :value (* (constant :value) (group (any (+ :tagged :untagged))))
+  :close-tag (drop (* "</" (cmt (* (backref :tag-name) (capture :w+)) ,=) ">"))
+  :untagged (capture (some (if-not "<" 1)))}
+ "<p><em>Hello</em> <strong>world</strong>!</p>"]
+```
+
+Basically the content consists of a tuple of the arguments to pass to
+`peg/match` / `meg/match`.
+
+To see some other sample files, see the `spt/trace/samples` directory that
 may be living under `JANET_PATH` (for a non-project-specific
 installation).
 
@@ -152,6 +167,10 @@ $ spt -h
   implementation of Janet's `peg/match`.  See the
   `margaret` Janet module for more details.
 ```
+
+## Credits
+
+* pyrmont - discussion and samples
 
 ## Footnotes
 
