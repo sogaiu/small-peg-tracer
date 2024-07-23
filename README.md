@@ -122,6 +122,8 @@ Recommended starting points:
 
 In Emacs, this might be done via `M-x shell-command-on-region`.
 
+![spt via Emacs](spt-s-via-emacs.png?raw=true "spt via Emacs")
+
 #### Vim / Neovim
 
 In Vim / Neovim, using visual mode to make a selection and then typing
