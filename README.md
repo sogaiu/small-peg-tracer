@@ -123,7 +123,25 @@ most of the files in the `spt/margaret/examples` directory.
 
 #### Emacs
 
-In Emacs, this might be done via `M-x shell-command-on-region`.
+In Emacs, this might be done by first invoking:
+
+```
+M-x shell-command-on-region
+```
+
+Then at the minibuffer prompt of:
+
+```
+Shell command on region:
+```
+
+fill in as:
+
+```
+Shell command on region: spt -s
+```
+
+followed by pressing the enter key.
 
 ![spt via Emacs](spt-s-via-emacs.png?raw=true "spt via Emacs")
 
