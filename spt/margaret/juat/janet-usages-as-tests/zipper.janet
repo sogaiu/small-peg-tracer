@@ -1132,7 +1132,7 @@
   (set cur-zloc start-zloc)
   # trying to do this together in step 1 is not straight-forward
   # because the desired exiting condition for the while loop depends
-  # on cur-zloc becomnig end-zloc -- if `replace` were to be used
+  # on cur-zloc becoming end-zloc -- if `replace` were to be used
   # there, the termination condition never gets fulfilled properly.
   (for i 0 (dec (length kids)) # left to right again
     (set cur-zloc

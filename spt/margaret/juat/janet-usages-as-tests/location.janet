@@ -158,7 +158,7 @@
                                    `"`))
     #
     :escape (sequence "\\"
-                      (choice (set "0efnrtvz\"\\")
+                      (choice (set `"'0?\abefnrtvz`)
                               (sequence "x" (2 :h))
                               (sequence "u" (4 :h))
                               (sequence "U" (6 :h))

@@ -147,7 +147,9 @@
         (string a-dir sep path))
       (case (os/stat sub-path :mode)
         :directory
-        (helper sub-path)
+        (when (not= path ".git")
+          (when (not (os/stat (string sub-path sep ".gitrepo")))
+            (helper sub-path)))
         #
         :file
         (when (string/has-suffix? ext sub-path)
