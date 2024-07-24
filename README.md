@@ -33,7 +33,7 @@ user-specified calls to `peg/match` / `meg/match`.
 
 ### spt
 
-With no other arguments, some trace files will be generated based on 
+With no other arguments, some trace files will be generated based on
 how `janet` is feeling:
 
 ```
