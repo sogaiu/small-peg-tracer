@@ -4,6 +4,7 @@
 (def first-evt-fname "first.html")
 (def last-evt-fname "last.html")
 (def evt-log-fname "log.html")
+(def help-fname "help.html")
 
 (def dump-filename "dump.jdn")
 
@@ -213,7 +214,9 @@
     // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
     const keyName = event.key;
 
-    if (keyName === "u") {
+    if (keyName === "?") {
+      document.getElementById('help').click();
+    } else if (keyName === "u") {
       document.getElementById('up').click();
     } else if (keyName === "g") {
       document.getElementById('log').click();
@@ -279,6 +282,13 @@
                `id="log" `
                `href="` evt-log-fname
                `">[lo<span style="color: ` (sk-color) `">g</span>]</a>`)
+  (buffer/push buf " ")
+  (buffer/push buf
+               `<a `
+               `style="color: ` (link-color) `" `
+               `id="help" `
+               `href="` help-fname
+               `">[<span style="color: ` (sk-color) `">?</span>]</a>`)
   (buffer/push buf "\n")
 
   (render-nav-item buf "first" 0 beg)
@@ -858,6 +868,42 @@
     # make some special-case aliases (actually duplicates)
     (spit first-evt-fname (slurp "0.html"))
     (spit last-evt-fname (slurp (string (dec (length events)) ".html")))
+
+    (spit help-fname
+          ``
+          <pre><u>help page</u></pre>
+          <hr>
+          <pre><u>background</u></pre>
+          <pre>
+          each call to `peg/match` can be thought of
+          as consisting of a sequence of events
+          corresponding to entries into, exits out of,
+          and/or erroring out of a sequence of peg
+          "call" frames.  each spt trace consists of
+          a series of such events.
+
+          each event has its own html file showing
+          information about the event.  there are
+          links / shortcuts that can be used to
+          navigate to related event files.
+          </pre>
+          <hr>
+          <pre><u>navigation / shortcuts</u></pre>
+          <pre>
+          <u>u</u>p - navigate up a level
+          lo<u>g</u> - view event log for current trace
+          <u>?</u> - view help (this page)
+
+          <u>f</u>irst - go to first event
+          <u>l</u>ast - go to last event
+
+          <u>p</u>rev - go to previous event
+          <u>n</u>ext - go to next event
+
+          en<u>t</u>ry - go to entry event for current frame
+          e<u>x</u>it - go to exit event for current frame
+          </pre>
+          ``)
 
     events))
 
