@@ -62,6 +62,21 @@ janet make-and-run-juat-tests.janet
 There are a few ways `janet-usages-as-tests` can be used with some
 target project.
 
+The basic idea in each case is to put an appropriate `.janet` file in
+the `test` subdirectory of the target project so that it is executed
+when `jpm test` is invoked.
+
+The aforementioned `.janet` file is a launching script for code in
+`janet-usages-as-tests` and should also be edited to contain names of
+files and directories in which to search for usages to convert into
+tests.
+
+Some directories are skipped in this process of searching for usages
+(to turn into tests), including:
+
+* `.git` directories
+* directories containing a file named `.gitrepo`
+
 ### Git Subrepo
 
 0. Ensure [git-subrepo](https://github.com/ingydotnet/git-subrepo) is
@@ -85,13 +100,19 @@ target project.
 
 Some repositories that use this method include:
 
-* [janet-jsonish](https://github.com/sogaiu/janet-totp "JSON <-> JDN
+* [janet-checksums](https://github.com/sogaiu/janet-checksums "Some
+  digest functions in Janet")
+* [janet-jsonish](https://github.com/sogaiu/janet-jsonish "JSON <-> JDN
   Converter in Pure Janet")
 * [janet-punyishcode](https://github.com/sogaiu/janet-totp "Punycode
   decoding / encoding in Janet")
+* [janet-tempdir](https://github.com/sogaiu/janet-tempdir "Some temp
+  dir creation bits for Janet")
 * [janet-totp](https://github.com/sogaiu/janet-totp "TOTP in Janet")
-* [simple-peg-tracer](https://github.com/sogaiu/simple-peg-tracer
-  "Simple Janet PEG tracer")
+* [janet-zipper](https://github.com/sogaiu/janet-zipper "Zippers in
+  Janet")
+* [small-peg-tracer](https://github.com/sogaiu/small-peg-tracer
+  "Small Janet PEG tracer")
 
 [*] If you chose a subdirectory name other than `juat`, the path will
 likely need to be edited to match.
@@ -126,8 +147,6 @@ Some repositories that use this method include:
   Directory Trees")
 * [janet-xmlish](https://github.com/sogaiu/janet-xmlish "Hack to Work
   with Some Amount of XML")
-* [janet-zipper](https://github.com/sogaiu/janet-zipper "Zippers in
-  Janet")
 * [jpm-tasks-view](https://github.com/sogaiu/jpm-tasks-view
   "View jpm tasks by tag")
 * [margaret](https://github.com/sogaiu/margaret "A Janet
