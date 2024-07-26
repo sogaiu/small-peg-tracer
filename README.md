@@ -1,4 +1,4 @@
-# simple-peg-tracer (spt)
+# small-peg-tracer (spt)
 
 Generate and investigate traces for Janet PEG execution [1].
 
@@ -12,14 +12,14 @@ navigable in typical web browsers.
 Quick:
 
 ```
-jpm install https://github.com/sogaiu/simple-peg-tracer
+jpm install https://github.com/sogaiu/small-peg-tracer
 ```
 
 Manual:
 
 ```
-git clone https://github.com/sogaiu/simple-peg-tracer
-cd simple-peg-tracer
+git clone https://github.com/sogaiu/small-peg-tracer
+cd small-peg-tracer
 jpm install
 ```
 

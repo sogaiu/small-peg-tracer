@@ -1,7 +1,7 @@
 (declare-project
-  :name "simple-peg-tracer"
-  :url "https://github.com/sogaiu/simple-peg-tracer"
-  :repo "git+https://github.com/sogaiu/simple-peg-tracer.git")
+  :name "small-peg-tracer"
+  :url "https://github.com/sogaiu/small-peg-tracer"
+  :repo "git+https://github.com/sogaiu/small-peg-tracer.git")
 
 (declare-source
   :source @["spt"])
