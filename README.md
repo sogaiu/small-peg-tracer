@@ -7,6 +7,8 @@ navigable in typical web browsers.
 
 ![Trace Sample](spt-trace-sample.png?raw=true "Trace Sample")
 
+Some remarks about [when](doc/when.md) one might use this.
+
 ## Installation
 
 Quick:
@@ -71,8 +73,7 @@ Recommended starting points:
 ### Make a Trace from a User-Constructed Sample File
 
 `spt` can also be passed a file path or file name containing suitable
-text (roughly, arguments that could be passed to `peg/match` wrapped
-in a tuple) from which to construct a call to `meg/match`:
+text from which to construct a call to `meg/match`:
 
 ```
 $ spt $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
@@ -99,15 +100,15 @@ Here is what a typical file looks like:
 Basically the content consists of a tuple of the arguments to pass to
 `peg/match` / `meg/match`.
 
-To see some other sample files, see the `spt/trace/samples` directory that
-may be living under `JANET_PATH` (for a non-project-specific
+To see some other sample files, see the `spt/trace/samples` directory
+that may be living under `JANET_PATH` (for a non-project-local
 installation).
 
 ### Make a Trace Based on Standard Input Content
 
 `spt -s` can be usefully invoked from an editor, being passed a
 suitable selection of text via standard input.  The selection should
-be a self-contained call to `peg/match`.
+be a self-contained call [2] to `peg/match`.
 
 ```
 $ echo '(peg/match ~(capture "a") "a")' | spt -s
@@ -224,3 +225,22 @@ $ spt -h
 [margaret](https://github.com/sogaiu/margaret)), which is an emulation
 of Janet's `peg/match`.  There are some differences, but hopefully
 this tool will still be useful enough (^^;
+
+[2] The phrase "self-contained call" above means the call could be
+handed to janet directly for evaluation without having previous
+arranged for any bindings.  For example:
+
+```janet
+(peg/match ~(capture "a") "a")
+```
+
+would be "self-contained", while the call to `peg/match` below:
+
+```janet
+(def text "hello")
+
+(peg/match ~(capture "a") text)
+```
+
+would not be "self-contained" because a binding for `text` would
+need to have been arranged for before the `peg/match` call.
