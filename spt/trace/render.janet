@@ -421,12 +421,13 @@
                "</pre>")
 
   (def tags (get-in event [:state :tags]))
-  (when (not (empty? tags))
-    (def tagged-captures (get-in event [:state :tagged-captures]))
-    (def tag-map (zipcoll tags tagged-captures))
+  (def tagged-captures (get-in event [:state :tagged-captures]))
+  (when (not (empty? tagged-captures))
     (buffer/push buf
-                 "<pre>tagged-captures: "
-                 (escape (string/format "%n" tag-map))
+                 "<pre>tagged-captures:\n"
+                 "  tags: " (escape (string/format "%n" tags)) "\n"
+                 "  values: "
+                 (escape (string/format "%n" tagged-captures)) "\n"
                  "</pre>"))
 
   (def mode (get-in event [:state :mode]))
