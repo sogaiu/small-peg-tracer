@@ -1,2 +1,2 @@
 [~(split :s+ (capture (to -1)))
- "a   b      c"]
+ "a b  c"]
