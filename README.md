@@ -31,7 +31,7 @@ available on `PATH` and a `spt` directory under `JANET_PATH`.
 `spt` can be used to generate sample traces from existing samples or
 user-specified calls to `peg/match` / `meg/match`.
 
-### spt
+### Just Generate Some Trace
 
 With no other arguments, some trace files will be generated based on
 how `janet` is feeling:
@@ -51,7 +51,7 @@ starting point URLs.  Using a web browser to interact with the
 generated files is recommended.  If the browser supports JavaScript,
 some shortcut keys may be available.
 
-### spt \<string-that-is-typically-a-peg-special-name\>
+### Make a Trace from Bundled Sample File
 
 With at least one argument that is not a file path or file name, an
 attempt will be made to filter for and select from existing samples
@@ -68,7 +68,7 @@ Recommended starting points:
 * event log: file:///tmp/spt-trace-900/log.html
 ```
 
-### spt \<file-path-or-name\>
+### Make a Trace from a User-Constructed Sample File
 
 `spt` can also be passed a file path or file name containing suitable
 text (roughly, arguments that could be passed to `peg/match` wrapped
@@ -103,7 +103,7 @@ To see some other sample files, see the `spt/trace/samples` directory that
 may be living under `JANET_PATH` (for a non-project-specific
 installation).
 
-### spt -s
+### Make a Trace Based on Standard Input Content
 
 `spt -s` can be usefully invoked from an editor, being passed a
 suitable selection of text via standard input.  The selection should
