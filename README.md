@@ -216,6 +216,7 @@ $ spt -h
 
 ## Credits
 
+* pepe - discussions
 * pyrmont - discussion and samples
 * toraritte - [this stackoverflow answer](https://stackoverflow.com/a/5373376)
 
