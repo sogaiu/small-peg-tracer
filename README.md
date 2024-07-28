@@ -228,7 +228,7 @@ of Janet's `peg/match`.  There are some differences, but hopefully
 this tool will still be useful enough (^^;
 
 [2] The phrase "self-contained call" above means the call could be
-handed to janet directly for evaluation without having previous
+handed to janet directly for evaluation without having previously
 arranged for any bindings.  For example:
 
 ```janet
