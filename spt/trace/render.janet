@@ -845,7 +845,7 @@
     (try
       (meg/match peg text start ;args)
       ([e]
-        (eprin "Match call resulted in an error: ")
+        (eprin "meg/match call resulted in an error: ")
         (eprintf e)
         # not an error that is the result of a call to peg-match
         (when (not (dyn :meg-error))
