@@ -26,7 +26,8 @@ jpm install
 ```
 
 In either case, success should lead to the command `spt` being
-available on `PATH` and a `spt` directory under `JANET_PATH`.
+available on `PATH` and a `spt` directory within a directory on
+`JANET_PATH`.
 
 ## Usage Patterns
 
@@ -40,7 +41,7 @@ how `janet` is feeling:
 
 ```
 $ spt
-Selected file: $JANET_PATH/spt/trace/samples/backmatch-sequence-capture-string.janet
+Selected file: <dir-on-JANET_PATH>/spt/trace/samples/backmatch-sequence-capture-string.janet
 Generated trace files in /tmp/spt-trace-458.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-458/first.html
@@ -62,7 +63,7 @@ supplied argument:
 
 ```
 $ spt sequence
-Selected file: $JANET_PATH/spt/trace/samples/sequence-string.janet
+Selected file: <dir-on-JANET_PATH>/spt/trace/samples/sequence-string.janet
 Generated trace files in /tmp/spt-trace-900.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-900/first.html
@@ -76,8 +77,8 @@ Recommended starting points:
 text from which to construct a call to `meg/match`:
 
 ```
-$ spt $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
-Selected file: $JANET_PATH/spt/trace/samples/pyrmont-inqk.janet
+$ spt <dir-on-JANET_PATH>/spt/trace/samples/pyrmont-inqk.janet
+Selected file: <dir-on-JANET_PATH>/spt/trace/samples/pyrmont-inqk.janet
 Generated trace files in /tmp/spt-trace-e75.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-e75/first.html
@@ -101,7 +102,7 @@ Basically the content consists of a tuple of the arguments to pass to
 `peg/match` / `meg/match`.
 
 To see some other sample files, see the `spt/trace/samples` directory
-that may be living under `JANET_PATH` (for a non-project-local
+that may be living on `JANET_PATH` (for a non-project-local
 installation).
 
 ### Make a Trace Based on Standard Input Content
@@ -170,9 +171,6 @@ Subsequently, typing `:w !spt -t` to make that:
 The generated files are not cleaned up automatically by `spt`.  The
 operating system might clean them up at some point, but otherwise the
 output URLs should give an idea of which directories to delete.
-
-Instances of `$JANET_PATH` above are meant to be filled in via the
-reader's imagination :)
 
 ## Usage Summary
 
