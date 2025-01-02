@@ -214,9 +214,9 @@ $ spt -h
 
 ## Credits
 
+* esamatti and toraritte - [this stackoverflow answer](https://stackoverflow.com/a/5373376)
 * pepe - discussions
 * pyrmont - discussion and samples
-* toraritte - [this stackoverflow answer](https://stackoverflow.com/a/5373376)
 
 ## Footnotes
 
