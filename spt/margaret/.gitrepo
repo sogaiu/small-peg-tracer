@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/sogaiu/margaret
 	branch = master
-	commit = 2d7cd3222c8978c74ec8c0193d86c5ab1ea06284
-	parent = 0b369d3ed0f81938476e9f6205988cfd6bc7094f
+	commit = 9a6522431ecef30e8cf27b00e82830126be0da82
+	parent = dc0dc1e012f2ed90d4109005842cb04c8b9bbae0
 	method = merge
 	cmdver = 0.4.9
