@@ -1,0 +1,26 @@
+{:name "small-peg-tracer"
+ :url "https://github.com/sogaiu/small-peg-tracer"
+ :repo "git+https://github.com/sogaiu/small-peg-tracer"
+
+ :vendored
+ [{:name "some-bundle-bits"
+   :url "https://github.com/sogaiu/some-bundle-bits"
+   :tag "7ddb7ec53a6eb8c81b0c22bb7710a01fff57a759"
+   :paths [["sbb.janet" "bundle/"]]}
+  {:name "jell"
+   :url "https://github.com/sogaiu/jell"
+   :tag "7eea04a6e54bb7c99052262d9ebe6111633e7382"
+   :paths [["jell" "bin/"]]}
+  {:name "margaret"
+   :url "https://github.com/sogaiu/margaret"
+   :tag "f232287c5fbba4a7a582d67ceb3e1375a0eb57da"
+   :paths [["margaret/meg.janet" "src/"]]}
+  {:name "niche"
+   :url "https://github.com/sogaiu/niche"
+   :tag "3f744cfb02b472971f82e78f16a027908a4bd717"
+   :paths [["niche.janet" "bin/"]]}]
+
+ :binscripts
+ [{:main "spt"
+   :is-janet true}]}
+

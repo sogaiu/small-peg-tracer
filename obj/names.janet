@@ -1,0 +1,21 @@
+(def n/names
+  @["accumulate-sequence-capture-integer"
+    "backmatch-sequence-capture-string"
+    "backref-sequence-capture-some-string-keyword"
+    "choice-string-error"
+    "cms-constant"
+    "cmt-sequence-capture-string"
+    "colon-extended-numbers"
+    "group-sequence-capture-integer"
+    "lenprefix-sequence-number-capture-backref"
+    "pyrmont-inqk"
+    "sequence-only-tags-capture-integer-backref"
+    "sequence-string"
+    "sequence-string-some-integer-string"
+    "sequence-til-capture-to-capture-to"
+    "split-keyword-capture-to-integer"
+    "struct-choice-keyword-constant-look-integer-sequence-string-position"
+    "struct-some-if-not-string-integer-set-opt-replace-any-capture-keyword-constant"
+    "sub-sequence-constant-integer-capture-backref"
+    "unref-struct-sequence-integer-choice-capture-any-if-not-string-some-keyword-backmatch"])
+

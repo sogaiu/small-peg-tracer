@@ -11,23 +11,31 @@ Some remarks about [when](doc/when.md) one might use this.
 
 ## Installation
 
-Quick:
+Some ways to install `spt` follow...
 
-```
-jpm install https://github.com/sogaiu/small-peg-tracer
-```
-
-Manual:
+First clone this repository and set the current working directory
+appropriately:
 
 ```
 git clone https://github.com/sogaiu/small-peg-tracer
 cd small-peg-tracer
-jpm install
 ```
 
-In either case, success should lead to the command `spt` being
-available on `PATH` and a `spt` directory within a directory on
-`JANET_PATH`.
+### Via `janet` or `jeep`
+
+```
+# use janet...
+janet --install .
+# or use jeep
+jeep install
+```
+
+If you haven't configured your `PATH` to contain `<syspath>/bin`, it
+might be helpful to do so.
+
+### Via Copying or Symlinking
+
+Copy or symlink `spt` somewhere on your `PATH`.
 
 ## Usage Patterns
 
@@ -41,7 +49,7 @@ how `janet` is feeling:
 
 ```
 $ spt
-Selected file: <dir-on-JANET_PATH>/spt/trace/samples/backmatch-sequence-capture-string.janet
+Selected: backmatch-sequence-capture-string
 Generated trace files in /tmp/spt-trace-458.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-458/first.html
@@ -54,7 +62,7 @@ starting point URLs.  Using a web browser to interact with the
 generated files is recommended.  If the browser supports JavaScript,
 some shortcut keys may be available.
 
-### Make a Trace from Bundled Sample File
+### Make a Trace from Bundled Sample
 
 With at least one argument that is not a file path or file name, an
 attempt will be made to filter for and select from existing samples
@@ -63,7 +71,7 @@ supplied argument:
 
 ```
 $ spt sequence
-Selected file: <dir-on-JANET_PATH>/spt/trace/samples/sequence-string.janet
+Selected: sequence-string
 Generated trace files in /tmp/spt-trace-900.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-900/first.html
@@ -77,8 +85,8 @@ Recommended starting points:
 text from which to construct a call to `meg/match`:
 
 ```
-$ spt <dir-on-JANET_PATH>/spt/trace/samples/pyrmont-inqk.janet
-Selected file: <dir-on-JANET_PATH>/spt/trace/samples/pyrmont-inqk.janet
+$ spt data/pyrmont-inqk.janet
+Selected: data/pyrmont-inqk.janet
 Generated trace files in /tmp/spt-trace-e75.
 Recommended starting points:
 * first event: file:///tmp/spt-trace-e75/first.html
@@ -101,9 +109,8 @@ Here is what a typical file looks like:
 Basically the content consists of a tuple of the arguments to pass to
 `peg/match` / `meg/match`.
 
-To see some other sample files, see the `spt/trace/samples` directory
-that may be living on `JANET_PATH` (for a non-project-local
-installation).
+To see some other sample files, see the `data/` directory under
+the repository root.
 
 ### Make a Trace Based on Standard Input Content
 
@@ -119,9 +126,6 @@ Recommended starting points:
 * last event: file:///tmp/spt-trace-87a/last.html
 * event log: file:///tmp/spt-trace-87a/log.html
 ```
-
-Note that there are numerous self-contained calls to `peg/match` in
-most of the files in the `spt/margaret/examples` directory.
 
 #### Emacs
 
