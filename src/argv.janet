@@ -2,7 +2,8 @@
   {"--dark" "-d"
    "--help" "-h"
    "--light" "-l"
-   "--stdin" "-s"})
+   "--stdin" "-s"
+   "--version" "-v"})
 
 (def shorts-table
   (tabseq [[full short] :pairs arg-data

@@ -13,6 +13,8 @@
 
     -h, --help                   show this output
 
+    -v, --version                show version information
+
     -s, --stdin                  read stdin for input
 
     -d, --dark                   use dark theme
@@ -58,6 +60,11 @@
   # usage
   (when (opts :help)
     (print usage)
+    (os/exit 0))
+
+  # version
+  (when (opts :version)
+    (print version)
     (os/exit 0))
 
   (cond

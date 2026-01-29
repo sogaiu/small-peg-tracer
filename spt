@@ -5,7 +5,8 @@
   {"--dark" "-d"
    "--help" "-h"
    "--light" "-l"
-   "--stdin" "-s"})
+   "--stdin" "-s"
+   "--version" "-v"})
 
 (def a/shorts-table
   (tabseq [[full short] :pairs a/arg-data
@@ -4544,7 +4545,7 @@
 (comment import ./theme :prefix "")
 
 
-(def version "2026-01-29_03-05-36")
+(def version "2026-01-29_03-10-36")
 
 (def usage
   ``
@@ -4553,6 +4554,8 @@
   Generate and inspect Janet PEG execution traces [1].
 
     -h, --help                   show this output
+
+    -v, --version                show version information
 
     -s, --stdin                  read stdin for input
 
@@ -4599,6 +4602,11 @@
   # usage
   (when (opts :help)
     (print usage)
+    (os/exit 0))
+
+  # version
+  (when (opts :version)
+    (print version)
     (os/exit 0))
 
   (cond

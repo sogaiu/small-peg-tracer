@@ -187,6 +187,8 @@ $ spt -h
 
     -h, --help                   show this output
 
+    -v, --version                show version information
+
     -s, --stdin                  read stdin for input
 
     -d, --dark                   use dark theme
