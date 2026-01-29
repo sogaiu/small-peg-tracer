@@ -1,5 +1,4 @@
 (import ./argv :prefix "")
-(import ./data :prefix "") # # needed for dyn in g/choose-random?
 (import ./tempdir :prefix "")
 (import ./generate :prefix "")
 (import ./theme :prefix "")

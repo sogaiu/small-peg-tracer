@@ -1,5 +1,4 @@
-#(import ./data :as data) # # import happens in main.janet for dyn
-(import ./names :as n)
+(import ./data :as data)
 (import ./random :as rnd)
 (import ./render :as r)
 
@@ -13,7 +12,7 @@
 
 (defn choose-random
   []
-  (def name (rnd/choose n/names))
+  (def name (rnd/choose data/names))
   #
   [name (choose-random-helper name)])
 
@@ -21,9 +20,9 @@
   [pattern]
   (def results
     (if (empty? pattern)
-      n/names
+      data/names
       (filter |(string/find pattern $)
-              n/names)))
+              data/names)))
   (def name (rnd/choose results))
   #
   [name (choose-random-helper name)])

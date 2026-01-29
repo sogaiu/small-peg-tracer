@@ -1,5 +1,4 @@
 (import ./argv :as a)
-(import ./data) # # needed for dyn in g/choose-random?
 (import ./tempdir :as td)
 (import ./generate :as g)
 (import ./theme :as t)
