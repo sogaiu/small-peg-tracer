@@ -4544,6 +4544,8 @@
 (comment import ./theme :prefix "")
 
 
+(def version "2026-01-29_03-05-36")
+
 (def usage
   ``
   Usage: spt [file|pattern] ...

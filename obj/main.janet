@@ -3,6 +3,8 @@
 (import ./generate :prefix "")
 (import ./theme :prefix "")
 
+(def version "DEVEL")
+
 (def usage
   ``
   Usage: spt [file|pattern] ...
