@@ -58,27 +58,27 @@
     (os/exit 1))
 
   # usage
-  (when (opts :help)
+  (when (get opts :help)
     (print usage)
     (os/exit 0))
 
   # version
-  (when (opts :version)
+  (when (get opts :version)
     (print version)
     (os/exit 0))
 
   (cond
-    (opts :light)
+    (get opts :light)
     (setdyn :spt-theme t/light-theme)
     #
-    (opts :dark)
+    (get opts :dark)
     (setdyn :spt-theme t/dark-theme)
     #
     (setdyn :spt-theme t/dark-theme))
 
   # generate trace files
   (def temp-dir (td/mk-temp-dir "spt-trace-///"))
-  (when (opts :stdin)
+  (when (get opts :stdin)
     (def content (file/read stdin :all))
     (g/gen-files-from-call-str content true temp-dir true)
     (os/exit 0))
