@@ -13,7 +13,7 @@
    :paths [["jell" "bin/"]]}
   {:name "margaret"
    :url "https://github.com/sogaiu/margaret"
-   :tag "f232287c5fbba4a7a582d67ceb3e1375a0eb57da"
+   :tag "4a1f7ab95885db4f0bbbcd8a9724b7a9fd929bc5"
    :paths [["margaret/meg.janet" "src/"]]}
   {:name "niche"
    :url "https://github.com/sogaiu/niche"

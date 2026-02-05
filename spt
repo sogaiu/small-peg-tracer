@@ -452,31 +452,60 @@
 
   )
 
+(defn meg/assert-arity
+  [argv n &opt limit]
+  (def args (drop 1 argv))
+  (default limit -1)
+  (when (not (neg? limit))
+    (assert (<= n limit)
+            (string/format "n: %d not <= limit: %d" n limit)))
+  (def num-args (length args))
+  (if (neg? limit)
+    (assert (>= num-args n)
+            {:peg argv
+             :msg (string/format "needs >= %d arg(s)" n)})
+    (assert (<= n num-args limit)
+            {:peg argv
+             :msg (if (= n limit)
+                    (string/format "needs exactly %d arg(s)" n)
+                    (string/format "needs between %d and %d args"
+                                   n limit))})))
+
+(comment
+
+  (meg/assert-arity '(range "az") 0 1)
+  # =>
+  true
+
+  (def [ok? result] (protect (meg/assert-arity '(range "az" "hi") 0 1)))
+  # =>
+  [false
+   {:msg "needs between 0 and 1 args"
+    :peg '(range "az" "hi")}]
+
+  (meg/assert-arity '(debug) 0 0)
+  # =>
+  true
+
+  (def [ok? result] (protect (meg/assert-arity '(debug 1) 0 0)))
+  # =>
+  [false
+   {:msg "needs exactly 0 arg(s)"
+    :peg '(debug 1)}]
+
+  )
+
 (defn meg/analyze
   [peg]
   (defn visit-peg
     [a-peg a-state]
-    (defn assert-arity
-      [argv n &opt limit]
-      (def args (drop 1 argv))
-      (default limit -1)
-      (when (not (neg? limit))
-        (assert (<= n limit)
-                (string/format "n: %d not <= limit: %d" n limit)))
-      (def num-args (length args))
-      (if (neg? limit)
-        (assert (>= num-args n)
-                {:peg argv
-                 :msg (string/format "needs >= %d arg(s)" n)})
-        (assert (<= n num-args limit)
-                {:peg argv
-                 :msg (if (= n limit)
-                        (string/format "needs exactly %d arg(s)" n)
-                        (string/format "needs between %d and %d args"
-                                       n limit))})))
+    (defn check-debug
+      [the-peg the-state]
+      (meg/assert-arity the-peg 0 0)
+      the-state)
     (defn check-range
       [the-peg the-state]
-      (assert-arity the-peg 1)
+      (meg/assert-arity the-peg 1)
       (assert (all |(and (string? $)
                          (= 2 (length $)))
                    (drop 1 the-peg))
@@ -489,14 +518,14 @@
       the-state)
     (defn check-set
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (assert (string? (get the-peg 1))
               {:peg the-peg
                :msg "arg should be a string"})
       the-state)
     (defn check-look
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (if (= (length the-peg) 3)
         (do
           (assert (int? (get the-peg 1))
@@ -520,32 +549,32 @@
                              (drop 1 the-peg))))
     (defn check-if
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-if-not
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-not
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-thru
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-to
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-between
       [the-peg the-state]
-      (assert-arity the-peg 3 3)
+      (meg/assert-arity the-peg 3 3)
       (assert (nat? (get the-peg 1))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -556,22 +585,22 @@
                              (drop 1 the-peg))))
     (defn check-opt
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-any
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-some
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-at-least
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (assert (nat? (get the-peg 1))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -579,7 +608,7 @@
                              (drop 1 the-peg))))
     (defn check-at-most
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (assert (nat? (get the-peg 1))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -587,7 +616,7 @@
                              (drop 1 the-peg))))
     (defn check-repeat
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (assert (nat? (get the-peg 1))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -595,35 +624,35 @@
                              (drop 1 the-peg))))
     (defn check-backref
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (assert (all |(keyword? $) (drop 1 the-peg))
               {:peg the-peg
                :msg "args should be keywords"})
       (merge the-state {:has-backref true}))
     (defn check-position
       [the-peg the-state]
-      (assert-arity the-peg 0 1)
+      (meg/assert-arity the-peg 0 1)
       (assert (all |(keyword? $) (drop 1 the-peg))
               {:peg the-peg
                :msg "args should be keywords"})
       the-state)
     (defn check-line
       [the-peg the-state]
-      (assert-arity the-peg 0 1)
+      (meg/assert-arity the-peg 0 1)
       (assert (all |(keyword? $) (drop 1 the-peg))
               {:peg the-peg
                :msg "args should be keywords"})
       the-state)
     (defn check-column
       [the-peg the-state]
-      (assert-arity the-peg 0 1)
+      (meg/assert-arity the-peg 0 1)
       (assert (all |(keyword? $) (drop 1 the-peg))
               {:peg the-peg
                :msg "args should be keywords"})
       the-state)
     (defn check-argument
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (assert (and (nat? (get the-peg 1)))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -634,7 +663,7 @@
       the-state)
     (defn check-constant
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (when (> (length the-peg) 2)
         (assert (keyword? (get the-peg 2))
                 {:peg the-peg
@@ -642,7 +671,7 @@
       the-state)
     (defn check-capture
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (when (> (length the-peg) 2)
         (assert (keyword? (get the-peg 2))
                 {:peg the-peg
@@ -651,7 +680,7 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-number
       [the-peg the-state]
-      (assert-arity the-peg 1 3)
+      (meg/assert-arity the-peg 1 3)
       (when (> (length the-peg) 2)
         (assert (or (nil? (get the-peg 2))
                     (and (int? (get the-peg 2))
@@ -666,7 +695,7 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-accumulate
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (when (> (length the-peg) 2)
         (assert (keyword? (get the-peg 2))
                 {:peg the-peg
@@ -675,17 +704,17 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-drop
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-only-tags
       [the-peg the-state]
-      (assert-arity the-peg 1 1)
+      (meg/assert-arity the-peg 1 1)
       (merge the-state
              (visit-peg (get the-peg 1) the-state)))
     (defn check-group
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (when (> (length the-peg) 2)
         (assert (keyword? (get the-peg 2))
                 {:peg the-peg
@@ -694,7 +723,7 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-nth
       [the-peg the-state]
-      (assert-arity the-peg 2 3)
+      (meg/assert-arity the-peg 2 3)
       (assert (nat? (get the-peg 1))
               {:peg the-peg
                :msg "1st arg should be a non-neg integer"})
@@ -706,22 +735,22 @@
              (visit-peg (get the-peg 2) the-state)))
     (defn check-sub
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-til
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-split
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-replace
       [the-peg the-state]
-      (assert-arity the-peg 2 3)
+      (meg/assert-arity the-peg 2 3)
       (when (> (length the-peg) 3)
         (assert (keyword? (get the-peg 3))
                 {:peg the-peg
@@ -730,7 +759,7 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-cms
       [the-peg the-state]
-      (assert-arity the-peg 2 3)
+      (meg/assert-arity the-peg 2 3)
       (assert (get {:function true :cfunction true}
                    (type (get the-peg 2)))
               {:peg the-peg
@@ -743,7 +772,7 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-cmt
       [the-peg the-state]
-      (assert-arity the-peg 2 3)
+      (meg/assert-arity the-peg 2 3)
       (assert (get {:function true :cfunction true}
                    (type (get the-peg 2)))
               {:peg the-peg
@@ -756,24 +785,24 @@
              (visit-peg (get the-peg 1) the-state)))
     (defn check-error
       [the-peg the-state]
-      (assert-arity the-peg 0 1)
+      (meg/assert-arity the-peg 0 1)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-backmatch
       [the-peg the-state]
-      (assert-arity the-peg 0 1)
+      (meg/assert-arity the-peg 0 1)
       (assert (all |(keyword? $) (drop 1 the-peg))
               {:peg the-peg
                :msg "args should be keywords"})
       (merge the-state {:has-backref true}))
     (defn check-lenprefix
       [the-peg the-state]
-      (assert-arity the-peg 2 2)
+      (meg/assert-arity the-peg 2 2)
       (merge the-state ;(map |(visit-peg $ the-state)
                              (drop 1 the-peg))))
     (defn check-readint
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (assert (and (int? (get the-peg 1))
                    (<= 0 (get the-peg 1) 8))
               {:peg the-peg
@@ -785,7 +814,7 @@
       the-state)
     (defn check-unref
       [the-peg the-state]
-      (assert-arity the-peg 1 2)
+      (meg/assert-arity the-peg 1 2)
       (when (> (length the-peg) 2)
         (assert (keyword? (get the-peg 2))
                 {:peg the-peg
@@ -817,13 +846,15 @@
         (cond
           (int? op)
           (do
-            (assert-arity a-peg 1 1)
+            (meg/assert-arity a-peg 1 1)
             (assert (nat? op)
                     @{:peg a-peg
                       :msg "1st arg should be non-neg integer"})
             (merge a-state
                    (visit-peg (get a-peg 1) a-state)))
           (case op
+            'debug (check-debug a-peg a-state)
+            '?? (check-debug a-peg a-state)
             'range (check-range a-peg a-state)
             'set (check-set a-peg a-state)
             'look (check-look a-peg a-state)
@@ -932,6 +963,24 @@
   # =>
   '@{:error @{:msg "1st arg should be non-neg integer"
               :peg [-1 :a]}}
+
+  (meg/analyze '(debug))
+  # =>
+  @{:has-backref false}
+
+  (meg/analyze '(debug 1))
+  # =>
+  '@{:error {:msg "needs exactly 0 arg(s)"
+             :peg (debug 1)}}
+
+  (meg/analyze '(??))
+  # =>
+  @{:has-backref false}
+
+  (meg/analyze '(?? 1 2))
+  # =>
+  '@{:error {:msg "needs exactly 0 arg(s)"
+             :peg (?? 1 2)}}
 
   (meg/analyze '(range "az"))
   # =>
@@ -2229,6 +2278,23 @@
       (def op (get peg 0))
       (def args (drop 1 peg))
       (cond
+        # RULE_DEBUG
+        (or (= 'debug op)
+            (= '?? op))
+        (do
+          (meg/log-in)
+          (def text (get-text index))
+          (def ret index)
+          (def len (- (get state :outer-text-end) index))
+          (def cap-count (length (get state :captures)))
+          (def buffer-str (string/slice text 0 (min len 31)))
+          (printf "\n?? at [%s]\nstack [%d]:"
+                  buffer-str cap-count)
+          (for i 0 cap-count
+            (printf "  [%d]: %M" i (get-in state [:captures i])))
+          (meg/log-out)
+          ret)
+
         # RULE_RANGE
         (= 'range op)
         (do
@@ -4545,7 +4611,7 @@
 (comment import ./theme :prefix "")
 
 
-(def version "2026-01-29_03-11-46")
+(def version "2026-02-05_14-08-34")
 
 (def usage
   ``
