@@ -323,7 +323,7 @@
 
 ########################################################################
 
-(defn render-text-param
+(defn render-original-text-param
   [buf event ret spaces]
   (def original-text (get-in event [:state :original-text]))
   (def boundary
@@ -401,7 +401,7 @@
                "<pre>(meg/match ~"
                (escape (string/format "%n"
                                       (get-in event [:state :grammar]))))
-  (render-text-param buf event ret spaces)
+  (render-original-text-param buf event ret spaces)
   (render-start-and-args buf event spaces)
   (buffer/push buf ")")
 

@@ -1706,7 +1706,7 @@
   (array/push frame-nums frame-num))
 
 (defn log-edge
-  [frame-num ev-num the-type & args]
+  [fram-num ev-num the-type & args]
   (when (os/getenv "VERBOSE")
     (def mt (dyn :meg-trace (file/temp)))
     (def spec
@@ -1714,7 +1714,7 @@
     (xprin mt "{")
     (xprin mt (string ":event-num " ev-num " "))
     (xprinf mt (string ":type %" spec " ") (keyword the-type))
-    (xprinf mt (string ":frame-num %" spec " ") frame-num)
+    (xprinf mt (string ":frame-num %" spec " ") fram-num)
     (each arg args
       (if (and (tuple? arg) (= 2 (length arg)))
         (xprinf mt (string "%" spec " %" spec " ")
@@ -1725,22 +1725,22 @@
 
 (defn log-entry
   [& args]
-  (def frame-num (++ frame-num))
+  (def fram-num (++ frame-num))
   (def ev-num (++ event-num))
-  (array/push frame-nums frame-num)
-  (log-edge frame-num ev-num "entry" ;args))
+  (array/push frame-nums fram-num)
+  (log-edge fram-num ev-num "entry" ;args))
 
 (defn log-exit
   [& args]
-  (def frame-num (array/pop frame-nums))
+  (def fram-num (array/pop frame-nums))
   (def ev-num (++ event-num))
-  (log-edge frame-num ev-num "exit" ;args))
+  (log-edge fram-num ev-num "exit" ;args))
 
 (defn log-error
   [& args]
-  (def frame-num (array/pop frame-nums))
+  (def fram-num (array/pop frame-nums))
   (def ev-num (++ event-num))
-  (log-edge frame-num ev-num "error" ;args))
+  (log-edge fram-num ev-num "error" ;args))
 
 (defn log
   [msg & args]
@@ -1858,9 +1858,9 @@
     (check-params state peg index grammar))
 
   (defn get-text
-    [index]
+    [an-index]
     (string/slice (get state :original-text)
-                  index (get state :text-end)))
+                  an-index (get state :text-end)))
 
   (cond
     # true / false
@@ -1945,13 +1945,31 @@
           (log-in)
           (def text (get-text index))
           (def ret index)
+          (def color-fmt? (if (dyn :err-color) "%M" "%m"))
           (def len (- (get state :outer-text-end) index))
-          (def cap-count (length (get state :captures)))
           (def buffer-str (string/slice text 0 (min len 31)))
-          (printf "\n?? at [%s]\nstack [%d]:"
-                  buffer-str cap-count)
-          (for i 0 cap-count
-            (printf "  [%d]: %M" i (get-in state [:captures i])))
+          (eprintf "?? at [%s] (index %d)"
+                   buffer-str (- index (get state :text-start)))
+          (def scratch-count (length (get state :scratch)))
+          (when (< 0 scratch-count)
+            (eprintf "accumulate buffer: %v" (get state :scratch)))
+          #
+          (def cap-count (length (get state :captures)))
+          (when (< 0 cap-count)
+            (eprintf "stack [%d]:" cap-count)
+            (for i 0 cap-count
+              (eprintf (string "  [%d]: " color-fmt?)
+                       i (get-in state [:captures i]))))
+          #
+          (def tag-cap-count (length (get state :tagged-captures)))
+          (when (< 0 tag-cap-count)
+            (eprintf "tag stack [%d]:" tag-cap-count)
+            (for i 0 tag-cap-count
+              (eprintf (string "  [%d] tag=%v: " color-fmt?)
+                       i
+                       (get-in state [:tags i])
+                       (get-in state [:tagged-captures i]))))
+          #
           (log-out)
           ret)
 
@@ -3117,6 +3135,6 @@
 
 # XXX: hack for better naming
 
-(def match peg-match)
+(def match :shadow peg-match)
 
-(def compile peg-compile)
+(def compile :shadow peg-compile)
