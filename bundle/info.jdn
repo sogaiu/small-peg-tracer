@@ -9,19 +9,19 @@
    :paths [["sbb.janet" "bundle/"]]}
   {:name "jell"
    :url "https://github.com/sogaiu/jell"
-   :tag "718464b8b94971fd8f9e984ca81d35e2c859546e"
+   :tag "ebebec3b772078678b0e8a4c6551fcab70329a69"
    :paths [["jell" "bin/"]]}
   {:name "margaret"
    :url "https://github.com/sogaiu/margaret"
-   :tag "43a361c531698111fa02fe8482cf013023a11e1c"
+   :tag "97f9d9fa4b05d8f2106d60330cde8d3fa40c4829"
    :paths [["margaret/meg.janet" "src/"]]}
   {:name "niche"
    :url "https://github.com/sogaiu/niche"
-   :tag "7caf81f636bb97104aada6544219733b3c86badf"
+   :tag "7d6914d48132b13241154252b20b131b1d0e46ba"
    :paths [["niche.janet" "bin/"]]}
   {:name "spork"
    :url "https://github.com/janet-lang/spork"
-   :tag "60110c3688c5687cc603159bcfa38d579f95a27d"
+   :tag "06ba2ed185631714e0fce0056927980ff4d9538c"
    :paths [["spork/sh-dsl.janet" "bin/"]]}]
 
  :binscripts
